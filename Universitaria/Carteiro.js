@@ -1,42 +1,66 @@
 function mailman(){
-	var n, m, numCasas, numDest;
+	var time = 0, count = 0, i = 0;	
 
-	var first = prompt("");
-	var second = prompt("");
-	var third = prompt("");
+	// FAZ A LEITURA DOS DADOS COMO STRINGS
+		var first = prompt("");
+		var numCasas = prompt("");
+		var numDest = prompt("");	
 
+	// CONVERTE OS DADOS DE STRINGS PARA ARRAYS DE STRING
 	first = first.split(" ");
-	second = second.split(" ");
-	third = third.split(" ");
+	numCasas = numCasas.split(" ");
+	numDest = numDest.split(" ");
 
-	console.log(first);
-	console.log(second);
-	console.log(third);
+	// CONVERTE OS ARRAYS DE STRING PARA ARRAYS DE INTEIROS
+	for(var y = 0; y < numCasas.length; y++){
+		numCasas[y] = parseInt(numCasas[y]);
+	}
+	for(var y = 0; y < numDest.length; y++){
+		numDest[y] = parseInt(numDest[y]);
+	}
+
+	// CHECA AS RESTRIÇÕES
+	if(first[0]<1 || first[0]>45000){
+		alert("O numero de casas a serem atendidas deve estar entre 1 e 45000!");
+		return 0;
+	}
+	if(first[1]<1 || first[1]>45000){
+		alert("O numero de encomendas a serem entregues deve estar entre 1 e 45000!");
+		return 0;
+	}
+	for(var y = 0; y < numCasas.length; y++){
+		if(numCasas[y]<1 || numCasas[y]>1000000){
+			alert("O numero de cada casa deve estar entre 1 e 1000000!");
+			return 0;
+		}
+	}
+
+	// FAZ A AVALIAÇÃO DO PERCURSO DO CARTEIRO
+	do{
+		if(numCasas[count] == numDest[i]){
+			if(i!=first[1]-2)
+				time++;
+			i++;			
+		}
+		else if(numCasas[count] < numDest[i]){
+			count++;
+			time++;
+		}
+		else if(numCasas[count] > numDest[i]){
+			count--;
+			time++;
+		}
+		
+	}while(i<first[1]-1);
+
+	// RETORNA O TEMPO
+	alert(time);
+
 }
 
 
 
 window.onload = function(){
-	/*
-	var p = "";
-	var p = p.concat("1 2 3 5 6");
-	var p = p.concat("<br>");
-	var p = p.concat(check("1 2 3 5 6"));
-	var p = p.concat("<br>");
-	var p = p.concat("<br>");
-
-	var p = p.concat("5 7 10 9 11");
-	var p = p.concat("<br>");
-	var p = p.concat(check("5 7 10 9 11"));
-	var p = p.concat("<br>");
-	var p = p.concat("<br>");
-
-	var p = p.concat("12 10 4 3 2");
-	var p = p.concat("<br>");
-	var p = p.concat(check("12 10 4 3 2"));
-	var p = p.concat("<br>");
-	var p = p.concat("<br>");
-	*/
 	mailman();
-//document.getElementById('resultado').innerHTML = p;
+document.getElementById('resultado').innerHTML = "";
 }
